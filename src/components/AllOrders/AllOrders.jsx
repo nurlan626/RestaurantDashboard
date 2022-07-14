@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import "./AllOrders.scss"
+import "./AllOrders.scss";
 
 const AllOrders = () => {
   const orders = useSelector((state) => state.ordersReducers);
@@ -9,45 +9,68 @@ const AllOrders = () => {
   const navigate = useNavigate();
 
   function addDishesHandler(id) {
-    navigate('/menuDishes', {state: {id: id}})
-
+    navigate("/menuDishes", { state: { id: id } });
   }
-  function dailyProfit(){
+  function dailyProfit() {
     let profit = 0;
     orders.forEach((order) => {
-       profit += order.totalAmount
-    })
-    return profit
+      profit += order.totalAmount;
+    });
+    return profit;
   }
   return (
     <div className="AllOrders">
-      
-      {orders.length === 0 ? (
-        <div>sifarishler yoxdur</div>
-      ) : (
-        
+      <h1>Bütun sifarişlər</h1>
+      <table id="dishes" className="dishes">
+        {orders.length !== 0 ? (
+          <tr>
+            <th>Say</th>
+            <th>Masa</th>
+            <th>Ofisiant </th>
+            <th>Status</th>
+            <th>Məbləğ</th>
+            <th>Tarix</th>
+            <th>Gəri</th>
+          </tr>
+        ) : (
+          <h3 className="h3">Sifarişlər yoxdur</h3>
+        )}
 
-        orders.map((order, index) => {
-          return (  
-            <div key={order.id} className="order">
-              <div>{index + 1}</div>
-              <div>{order.table}</div>
-              <div>{order.waiter} </div>
-              <div className={order.status === "Sonlanib" ? "sonlanib" : "sonlanmayib"}>{order.status}</div>
-              <div>{order.totalAmount} AZN</div>
-              <div>{order.status === "Sonlanib" ? (
-                <span>{order.endOrderTime}</span>
-              ) : (
-                <span>--</span>
-              )}</div>
-              <button onClick={() => addDishesHandler(order.id)}>BAX</button>
-            </div>
+        {orders.map((order, index) => {
+          return (
+            <tr key={order.id} className="orders">
+              <td>{index + 1}</td>
+              <td>{order.table}</td>
+              <td>{order.waiter} </td>
+              <td
+                className={
+                  order.status === "Sonlanib" ? "sonlanib" : "sonlanmayib"
+                }
+              >
+                {order.status}
+              </td>
+              <td>{order.totalAmount} AZN</td>
+              <td>
+                {order.status === "Sonlanib" ? (
+                  <span>{order.endOrderTime}</span>
+                ) : (
+                  <span>--</span>
+                )}
+              </td>
+              <td>
+                <button onClick={() => addDishesHandler(order.id)}>BAX</button>
+              </td>
+            </tr>
           );
-        })
-      )}
-       Cemi mebleg -  {dailyProfit()} AZN
+        })}
+      </table>
 
-      
+      <button onClick={() => navigate("/neworders")}>Yəni sifariş yarat</button>
+      {orders.length !== 0 ? (
+        <div>Cəmi məbləğ - {dailyProfit()} AZN</div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

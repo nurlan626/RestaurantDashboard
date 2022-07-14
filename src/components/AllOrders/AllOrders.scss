@@ -3,7 +3,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     gap: 20px;
 }
@@ -19,3 +19,28 @@
 .sonlanmayib{
     color: red;
 }
+
+
+
+.orders {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .orders  td, .orders  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .orders  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #008cff;
+    color: white;
+  }
+
+  .h3{
+    text-align: center;
+  }

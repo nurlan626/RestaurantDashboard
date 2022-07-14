@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 import menuJSON from "../../data/menu.js";
-import { addDish, addTotalAmount, cancelDish, closeOrder } from "../../redux/ordersReducers.js";
-import "./MenuDishes.scss"
+import {
+  addDish,
+  cancelDish,
+  closeOrder,
+} from "../../redux/ordersReducers.js";
+import "./MenuDishes.scss";
 
 const MenuDishes = () => {
   const [dish, setDish] = useState();
-
+  const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [menu, setMenu] = useState(menuJSON);
   const [finishOrder, setFinishOrder] = useState(false);
@@ -17,7 +21,7 @@ const MenuDishes = () => {
   let className = "";
   if (finishOrder) {
     className = "finishOrder";
-  } 
+  }
 
   let orders = useSelector((state) => state.ordersReducers);
 
@@ -25,13 +29,14 @@ const MenuDishes = () => {
     return item.id === state.id;
   });
 
-  // let dishes = orders[orderID].dishes;
   let dishes = useSelector((state) => state.ordersReducers[orderID].dishes);
 
-
-  let dishesBillAmount = 0
+  let dishesBillAmount = 0;
   if (dishes.length !== 0) {
-    dishesBillAmount = dishes.reduce((sum, dish) => sum + dish.price * dish.count , 0);
+    dishesBillAmount = dishes.reduce(
+      (sum, dish) => sum + dish.price * dish.count,
+      0
+    );
   }
 
   const addDishesHandler = (e) => {
@@ -54,22 +59,22 @@ const MenuDishes = () => {
   };
 
   function closeOrderHandler() {
-    dispatch(closeOrder(state.id))
+    dispatch(closeOrder(state.id));
     setFinishOrder(true);
-    
   }
-  function cancelDishHandler(orderID, dishID){
-    dispatch(cancelDish({
-      orderID: orderID,
-      dishID: dishID
-    }));
+  function cancelDishHandler(orderID, dishID) {
+    dispatch(
+      cancelDish({
+        orderID: orderID,
+        dishID: dishID,
+      })
+    );
   }
-
 
   return (
     <div className="menuDishes">
-      <div>Ashqdachi Listden mehsul sechimi edin</div>
-      <form  className="menuDishes-form">
+      <div>Aşaqdaçı listdən məhsul seçimi edin</div>
+      <form className="menuDishes-form">
         <select
           defaultValue={""}
           value={dish}
@@ -93,33 +98,62 @@ const MenuDishes = () => {
         ></input>
 
         <button type="submit" onClick={(e) => addDishesHandler(e)}>
-          elave et
+          əlavə et
         </button>
       </form>
       <div></div>
-      <div>
+      <table id="dishes" className="dishes">
+        {dishes.length !== 0 ? (
+          <tr>
+            <th>Say</th>
+            <th>Məhsul adı</th>
+            <th>Miqdar</th>
+            <th>Məbləğ</th>
+            <th>Sifariş saatı</th>
+            <th>Status</th>
+            <th>Gəri</th>
+          </tr>
+        ) : (
+          <div></div>
+        )}
+
         {dishes.map((item, index) => {
           return (
-            <div key={Math.random()} className="dish-box">
-              <div >
-              <span>{index + 1}</span>-<span>{item.dish}</span>-
-              <span>{item.count}</span>-
-              <span>{item.price * item.count} AZN</span>
-              <span>time {item.orderTime} </span>
-              <span>time {item.status} </span>
-              </div>
-         
-              <button onClick={() => cancelDishHandler(orderID, item.id)} >geri al</button>
-            </div>
+            <tr key={Math.random()}>
+              <td>{index + 1}</td>
+              <td>{item.dish}</td>
+              <td>{item.count}</td>
+              <td>{item.price * item.count} AZN</td>
+              <td> {item.orderTime} </td>
+              <td> {item.status} </td>
+
+              <button onClick={() => cancelDishHandler(orderID, item.id)}>
+                geri al
+              </button>
+            </tr>
           );
         })}
-        
-        
+      </table>
+      <div>
+        Cəmi məbləğ <span>{dishesBillAmount} AZN </span>
       </div>
       <div>
-          cemi mebleg <span>{dishesBillAmount} </span>
-        </div>
-      <button onClick={() => closeOrderHandler() } className={className} >Sifarishi sonlandirin</button>
+        <button
+          onClick={() => {
+            closeOrderHandler();
+          }}
+          className={className}
+        >
+          Sifarişi sonlandir
+        </button>
+        <button
+          onClick={() => {
+            navigate("/allorders");
+          }}
+        >
+          Gəri
+        </button>
+      </div>
     </div>
   );
 };
