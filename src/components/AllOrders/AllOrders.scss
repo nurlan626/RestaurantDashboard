@@ -1,0 +1,21 @@
+.AllOrders{
+    background-color: rgb(230, 230, 230);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.order{
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sonlanib{
+    color: green;
+}
+.sonlanmayib{
+    color: red;
+}

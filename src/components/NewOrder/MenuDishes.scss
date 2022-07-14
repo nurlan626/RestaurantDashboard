@@ -1,0 +1,25 @@
+.menuDishes{
+    background-color: rgb(224, 224, 224);
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+.menuDishes-form{
+    display: flex;
+    gap: 20px;
+}
+.dish-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    > div{
+        margin: 10px;
+    }
+}
+.finishOrder{
+    background-color: green;
+}

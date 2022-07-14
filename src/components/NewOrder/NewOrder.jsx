@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createNewOrder } from "../../redux/ordersReducers";
+import "./NewOrder.scss"
 
 const NewOrder = () => {
   const [table, setTable] = useState("");
@@ -23,8 +24,8 @@ const NewOrder = () => {
   };
 
   return (
-    <div>
-      <form>
+    <div class="newOrder">
+      <form  class="newOrder-form">
         <select
           value={waiter}
           onChange={(e) => setWaiter((e = e.target.value))}
@@ -59,9 +60,7 @@ const NewOrder = () => {
           Yarat
         </button>
       </form>
-      <div>
-        {table} {waiter}
-      </div>
+    
     </div>
   );
 };

@@ -9,12 +9,13 @@ const value = {
   startOrderTime: null,
   endOrderTime: null,
   cost: null,
+  totalAmount: null,
   dishes: [
     {
       dish: null,
       count: null,
       price: null,
-      totalAmount: null,
+      
       orderTime: null,
       timeOfWaiting: null,
       dishStatus: null,
@@ -32,28 +33,46 @@ export const ordersSlice = createSlice({
       const newOrder = {
         ...action.payload,
         status: "Sonlanmayib",
-        cost: 0
+        totalAmount: 0,
+        dishes: []
       }
 
-      state.push(newOrder) 
+      state.unshift(newOrder) 
 
     },
 
     addDish: (state, action) => {
-      console.log(action.payload);
       let orderIndex = state.findIndex((item) => {
         return item.id === action.payload.id;
       });
+      state[orderIndex].dishes.unshift(action.payload);
+      state[orderIndex].totalAmount = state[orderIndex].totalAmount + action.payload.count * action.payload.price;
 
-      console.log("order index" + orderIndex);
-      // console.log("qweee" + state.id);
-
-      // state.dishes.push(action.payload)
-     
     },
+    closeOrder: (state, action) => {
+      let orderIndex = state.findIndex((item) => {
+        return item.id === action.payload;
+      });
+      
+      state[orderIndex].status = "Sonlanib"
+      console.log(state[orderIndex].status);
+    },
+    cancelDish: (state, action) => {
+      // console.log(action.payload.dishID);
+      let dishIndex = state[action.payload.orderID].dishes.findIndex((item) => {
+        return item.id === action.payload.dishID;
+      });
+      state[action.payload.orderID].dishes[dishIndex].dishStatus = "imtina";
+
+      console.log(state[action.payload.orderID].dishes[dishIndex].dishStatus);
+      console.log(state[action.payload.orderID].dishes[dishIndex] );
+      console.log(state[action.payload.orderID].dishes[dishIndex].dish);
+    }
+
+    
   },
 });
 
-export const { createNewOrder, addDish } = ordersSlice.actions;
+export const { createNewOrder, addDish, closeOrder, cancelDish } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

@@ -42,9 +42,8 @@ const MenuDishes = () => {
     dispatch(addDish(state));
     
   };
-  // useEffect(() => {
-  //   console.log(dishesValue);
-  // }, [dishesValue]);
+  
+
   return (
     <div>
       <div>Ashqdachi Listden mehsul sechimi edin</div>
@@ -86,7 +85,6 @@ const MenuDishes = () => {
               <span>{item.price * item.count} AZN</span>
               <span>time {item.orderTime} </span>
               <span>time {item.status} </span>
-              <button>geri al</button>
             </div>
           );
         })}
