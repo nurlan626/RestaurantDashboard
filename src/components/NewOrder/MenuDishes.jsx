@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import menuJSON from "../../data/menu.js";
-import {
-  addDish,
-  cancelDish,
-  closeOrder,
-} from "../../redux/ordersReducers.js";
+import { addDish, cancelDish, closeOrder } from "../../redux/ordersReducers.js";
 import "./MenuDishes.scss";
 
 const MenuDishes = () => {
   const [dish, setDish] = useState();
   const navigate = useNavigate();
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(null);
   const [menu, setMenu] = useState(menuJSON);
   const [finishOrder, setFinishOrder] = useState(false);
   const { state } = useLocation();
@@ -41,21 +37,26 @@ const MenuDishes = () => {
 
   const addDishesHandler = (e) => {
     e.preventDefault();
-    let dishIndex = menu.findIndex((item) => {
-      return item.name === dish;
-    });
-    setDish("");
-    setCount(0);
-    dispatch(
-      addDish({
-        id: state.id,
-        dish: dish,
-        count: count,
-        price: menu[dishIndex].price,
-        orderTime: new Date().toDateString(),
-        status: "verildi",
-      })
-    );
+    console.log(dish, count);
+    if (dish === "" || count === null) {
+      console.log("пусто");
+    } else {
+      let dishIndex = menu.findIndex((item) => {
+        return item.name === dish;
+      });
+      dispatch(
+        addDish({
+          id: state.id,
+          dish: dish,
+          count: count,
+          price: menu[dishIndex].price,
+          orderTime: new Date(),
+          status: "verildi",
+        })
+      );
+      setDish("");
+      setCount(null);
+    }
   };
 
   function closeOrderHandler() {
@@ -124,11 +125,16 @@ const MenuDishes = () => {
               <td>{item.dish}</td>
               <td>{item.count}</td>
               <td>{item.price * item.count} AZN</td>
-              <td> {item.orderTime} </td>
+              <td>
+                <div>
+                  {item.orderTime.getHours()}:{item.orderTime.getMinutes()}:
+                  {item.orderTime.getSeconds()}
+                </div>
+              </td>
               <td> {item.status} </td>
 
               <button onClick={() => cancelDishHandler(orderID, item.id)}>
-                geri al
+                gəri al
               </button>
             </tr>
           );

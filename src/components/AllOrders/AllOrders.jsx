@@ -52,7 +52,18 @@ const AllOrders = () => {
               <td>{order.totalAmount} AZN</td>
               <td>
                 {order.status === "Sonlanib" ? (
-                  <span>{order.endOrderTime}</span>
+                  <div>
+                    <span>
+                      {order.orderTime.getDate()}-{order.orderTime.getMonth()}-
+                      {order.orderTime.getFullYear()}
+                    </span>
+                    <span>
+                      {" "}
+                      {order.orderTime.getHours()}:
+                      {order.orderTime.getMinutes()}:
+                      {order.orderTime.getSeconds()}
+                    </span>
+                  </div>
                 ) : (
                   <span>--</span>
                 )}

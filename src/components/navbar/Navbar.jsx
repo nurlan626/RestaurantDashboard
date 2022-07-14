@@ -9,17 +9,17 @@ const Navbar = () => {
       <div className="navbar">
         <div>
           <NavLink to="/" className="Link">
-            Esas sehife
+            Əsas səhifə
           </NavLink>
         </div>
         <div>
           <NavLink to="/allorders" className="Link">
-            Butun sifarishler
+            Bütün sifarişlər
           </NavLink>
         </div>
         <div>
           <NavLink to="/neworders" className="Link">
-            Sifarish yarat
+            Sifariş yarat
           </NavLink>
         </div>
       </div>

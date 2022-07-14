@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createNewOrder } from "../../redux/ordersReducers";
-import "./NewOrder.scss"
+import "./NewOrder.scss";
 
 const NewOrder = () => {
   const [table, setTable] = useState("");
@@ -10,26 +10,27 @@ const NewOrder = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const createOrder = (e) => {
     e.preventDefault();
     const newOrder = {
       id: Math.random(),
       table: table,
       waiter: waiter,
-      orderTime: new Date().toUTCString(),
+      orderTime: new Date(),
     };
-    navigate('/menuDishes', {state: {id: newOrder.id}})
+    if(table && waiter) {
+      navigate("/menuDishes", { state: { id: newOrder.id } });
     dispatch(createNewOrder(newOrder));
+    }
+    
   };
 
   return (
-    <div class="newOrder">
-      <form  class="newOrder-form">
+    <div className="newOrder">
+      <form className="newOrder-form">
         <select
           value={waiter}
           onChange={(e) => setWaiter((e = e.target.value))}
-          
         >
           <option value="" selected disabled hidden>
             Waiter
@@ -44,7 +45,6 @@ const NewOrder = () => {
           <option value="" selected disabled hidden>
             Table
           </option>
-
           <option value="m1">m1</option>
           <option value="m2">m2</option>
           <option value="m3">m3</option>
@@ -60,7 +60,6 @@ const NewOrder = () => {
           Yarat
         </button>
       </form>
-    
     </div>
   );
 };
