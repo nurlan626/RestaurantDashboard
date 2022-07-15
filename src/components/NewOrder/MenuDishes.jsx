@@ -87,7 +87,7 @@ const MenuDishes = () => {
           {menu.map((dish) => {
             return (
               <option value={dish.name} key={Math.random()}>
-                {dish.name} - {dish.price}
+                {dish.name} - {dish.price} azn
               </option>
             );
           })}

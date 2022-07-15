@@ -1,2 +1,2 @@
 1. geri all функционал alindi - imtina
-2. SAAT eleve elemek
+json data
