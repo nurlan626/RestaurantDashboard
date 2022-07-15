@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import menuJSON from "../../data/menu.js";
@@ -9,8 +9,9 @@ const MenuDishes = () => {
   const [dish, setDish] = useState();
   const navigate = useNavigate();
   const [count, setCount] = useState(null);
-  const [menu, setMenu] = useState(menuJSON);
+  const [menu, setMenu] = useState(JSON.parse(menuJSON));
   const [finishOrder, setFinishOrder] = useState(false);
+
   const { state } = useLocation();
 
   const dispatch = useDispatch();
